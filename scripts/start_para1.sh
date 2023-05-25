@@ -1,0 +1,16 @@
+./target/release/parachain-template-node \
+--alice \
+--collator \
+--force-authoring \
+--chain raw_para_xcmp.json \
+--base-path /tmp/xcmpdemo/alice \
+--port 40333 \
+--ws-port 8844 \
+--rpc-methods=unsafe \
+--rpc-external \
+--rpc-cors=all \
+-- \
+--execution wasm \
+--chain ../polkadot/rawroco.json \
+--port 30343 \
+--ws-port 9977

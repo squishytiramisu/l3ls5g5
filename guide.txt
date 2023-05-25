@@ -1,0 +1,204 @@
+Get polkadot github
+
+cargo build --release
+
+Generate 3 collator keys
+
+ALICE:
+grandpa
+babe
+beefy
+key
+
+5FA9nQDVg267DEd8m1ZypXLBnvN7SFxYwV7ndqSYGiN9TTpu
+5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+KW39r9CJjAVzmkf9zQ4YDb2hqfAVGdRqn53eRqyruqpxAP5YL
+5GNJqTPyNqANBkUVMN1LPPrxXnFouWXoe2wNSmmEoLctxiZY
+
+BOB:
+grandpa
+babe
+beefy
+key
+
+5GoNkf6WdbxCFnPdAnYYQyCjAKPJgLNxXwPjwTh6DGg6gN3E
+5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
+KWByAN7WfZABWS5AoWqxriRmF5f2jnDqy3rB5pfHLGkY93ibN
+5HpG9w8EBLe5XCrbczpwq5TSXvedjrBGCwqxK1iQ7qUsSWFc
+
+MYACTOR 2: demo1
+AURA:    5DUhoqnLduCsoYqPHUQhDQHBiBJwCDxJyzvxbx84nKLZv1hF
+GRANDPA: 5G6CboSNuzrek61kcGtR7HYALCihgPrX6G9k25p9eUfbsvcb
+KW5WrjbAfXQt7yFUZ2tGWRptHhCad4kXoCQysENNMpppTg6GB
+sort toward force arrive eternal deputy tumble visual enrich crime peace ready
+
+
+
+./target/release/polkadot build-spec --chain=rococo-local --disable-default-bootnode > rococo-local.json
+
+./target/release/polkadot key insert --base-path /tmp/nodetest \
+  --chain rawroco.json \
+  --scheme Sr25519 \
+  --suri "sort toward force arrive eternal deputy tumble visual enrich crime peace ready" \
+  --password-interactive \
+  --key-type aura
+
+  ./target/release/polkadot key insert --base-path /tmp/nodetest \
+  --chain rawroco.json \
+  --scheme Ed25519 \
+  --suri "sort toward force arrive eternal deputy tumble visual enrich crime peace ready" \
+  --password-interactive \
+  --key-type grandpa
+
+    ./target/release/polkadot key insert --base-path /tmp/nodetest \
+  --chain rawroco.json \
+  --scheme Ed25519 \
+  --suri "sort toward force arrive eternal deputy tumble visual enrich crime peace ready" \
+  --password-interactive \
+  --key-type babe
+
+
+  Start 3 node:
+Alice, bob and Balint1
+dont forget to change the bootnode address
+dont forget that backoff limit is 50
+
+./target/release/polkadot purge-chain --base-path /tmp/relay/alice --chain ./rawroco.json
+./target/release/polkadot purge-chain --base-path /tmp/relay-bob --chain ./rawroco.json
+./target/release/polkadot purge-chain --base-path /tmp/nodetest --chain ./rawroco.json
+
+
+./target/release/polkadot \
+--alice \
+--validator \
+--base-path /tmp/relay/alice \
+--chain ./rawroco.json \
+--port 30333 \
+--ws-port 9944
+
+./target/release/polkadot \
+--bob \
+--validator \
+--base-path /tmp/relay-bob \
+--chain ./rawroco.json \
+--port 30334 \
+--ws-port 9945
+
+
+
+./target/release/polkadot \
+  --base-path /tmp/nodetest \
+  --chain ./rawroco.json \
+  --port 30335 \
+  --ws-port 9946 \
+  --rpc-port 9939 \
+  --validator \
+  --rpc-methods Unsafe \
+  --name Balint1 \
+  --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWLSDaq3sbexvKxfR37J11Yo8s798ZWyGGAx1EQd683J69 \
+  --password-interactive
+
+
+To parachain template add SUDO pallet
+https://docs.substrate.io/tutorials/build-a-parachain/open-message-passing-channels/
+https://docs.substrate.io/assets/tutorials/relay-chain-specs/parachain-template-1001.rs/
+
+RELAY-> Network -> Parachain reserve 2 ids
+
+Create 2 paras
+./target/release/parachain-template-node build-spec --disable-default-bootnode > plain_para_xcmp.json
+./target/release/parachain-template-node build-spec --disable-default-bootnode > plain_para_xcmp2.json
+
+
+Change protocolId
+Change paraId
+
+Save 
+
+./target/release/parachain-template-node build-spec --chain plain_para_xcmp.json --disable-default-bootnode --raw > raw_para_xcmp.json
+./target/release/parachain-template-node build-spec --chain plain_para_xcmp2.json --disable-default-bootnode --raw > raw_para_xcmp2.json
+
+
+Export runtime
+./target/release/parachain-template-node export-genesis-wasm --chain raw_para_xcmp.json para-2000-wasm
+./target/release/parachain-template-node export-genesis-wasm --chain raw_para_xcmp2.json para-2001-wasm
+
+Export genesis state
+./target/release/parachain-template-node export-genesis-state --chain raw_para_xcmp.json para-2000-genesis-state
+./target/release/parachain-template-node export-genesis-state --chain raw_para_xcmp2.json para-2001-genesis-state
+
+Run parachain1
+./target/release/parachain-template-node \
+--alice \
+--collator \
+--force-authoring \
+--chain raw_para_xcmp.json \
+--base-path /tmp/xcmpdemo/alice \
+--port 40333 \
+--ws-port 8844 \
+-- \
+--execution wasm \
+--chain ../polkadot/rawroco.json \
+--port 30343 \
+--ws-port 9977
+
+
+Run parachain1
+./target/release/parachain-template-node \
+--alice \
+--collator \
+--force-authoring \
+--chain raw_para_xcmp.json \
+--base-path /tmp/xcmpdemo/alice \
+--port 40333 \
+--ws-port 8845 \
+-- \
+--execution wasm \
+--chain ../polkadot/rawroco.json \
+--port 30344 \
+--ws-port 9978
+
+Register
+paraSudoWrapper
+sucoSceduleParaInitialize
+id, genesis,wasm, yes
+
+Run parachain2
+./target/release/parachain-template-node \
+--alice \
+--collator \
+--force-authoring \
+--chain raw_para_xcmp.json \
+--base-path /tmp/xcmpdemo/alice2 \
+--port 40334 \
+--ws-port 8846 \
+-- \
+--execution wasm \
+--chain ../polkadot/rawroco.json \
+--port 30345 \
+--ws-port 9979
+
+Adress2000: 5Ec4AhPUwPeyTFyuhGuBbD224mY85LKLMSqSSo33JYWCazU4
+Address2001: 5Ec4AhPV91i9yNuiWuNunPf6AQCYDhFTTA4G5QCbtqYApH9E
+
+Add to address book
+Transfer funds
+
+hrmp, hrmpInitOpenChannel
+
+2000 encode data 0x3c00d00700000600000088130000
+2001 encode data 0x3c00d10700000600000088130000
+
+parachain-en 
+sudo sudocall polkaddotxcm send 2001
+
+accept 2000 0x3c01d0070000
+
+from para2001
+sudo sudocall polkaddotxcm send 2001
+transact: 0x3c01d0070000
+
+
+check: from relay: hrmp hrmpchannels
+
+
