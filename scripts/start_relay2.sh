@@ -9,4 +9,5 @@
 --rpc-methods Unsafe \
 --rpc-cors all
 --port 30334 \
+--rpc-port 9934 \
 --ws-port 9945
