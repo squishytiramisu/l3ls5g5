@@ -9,7 +9,9 @@ BOOTNODE_ID=$1
   --ws-port 9946 \
   --rpc-port 9939 \
   --validator \
-  --rpc-methods Unsafe \
   --name Balint1 \
-  --bootnodes "/ip4/127.0.0.1/tcp/30333/p2p/$BOOTNODE_ID" \
+  --rpc-external \
+--ws-external \
+--rpc-methods Unsafe \
+--rpc-cors all \
   --password-interactive
