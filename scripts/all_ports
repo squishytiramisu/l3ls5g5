@@ -36,3 +36,16 @@ PARA2
 30345
 9967
 9979
+
+ufw allow 40333/tcp
+ufw allow 8833/tcp
+ufw allow 8844/tcp
+ufw allow 30343/tcp
+ufw allow 9966/tcp
+ufw allow 9977/tcp
+ufw allow 40334/tcp
+ufw allow 8834/tcp
+ufw allow 8846/tcp
+ufw allow 30345/tcp
+ufw allow 9967/tcp
+ufw allow 9979/tcp
