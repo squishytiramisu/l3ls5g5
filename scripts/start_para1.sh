@@ -1,4 +1,4 @@
-./target/release/parachain-template-node \
+./node2001 \
 --alice \
 --collator \
 --force-authoring \
@@ -13,7 +13,7 @@
 --ws-external \
 -- \
 --execution wasm \
---chain ../polkadot/rawroco.json \
+--chain ./rawroco.json \
 --port 30343 \
 --ws-port 9977 \
 --rpc-port 9966
