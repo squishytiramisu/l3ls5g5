@@ -9,6 +9,7 @@
 --rpc-port 8834 \
 --rpc-methods=unsafe \
 --rpc-external \
+--ws-external \
 --rpc-cors=all \
 -- \
 --execution wasm \
