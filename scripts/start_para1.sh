@@ -10,6 +10,7 @@
 --rpc-methods=unsafe \
 --rpc-external \
 --rpc-cors=all \
+--ws-external \
 -- \
 --execution wasm \
 --chain ../polkadot/rawroco.json \
