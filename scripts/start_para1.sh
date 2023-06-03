@@ -6,6 +6,7 @@
 --base-path /tmp/xcmpdemo/alice \
 --port 40333 \
 --ws-port 8844 \
+--rpc-port 8833 \
 --rpc-methods=unsafe \
 --rpc-external \
 --rpc-cors=all \
@@ -13,4 +14,5 @@
 --execution wasm \
 --chain ../polkadot/rawroco.json \
 --port 30343 \
---ws-port 9977
+--ws-port 9977 \
+--rpc-port 9966
