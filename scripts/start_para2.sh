@@ -1,4 +1,4 @@
-./target/release/parachain-template-node \
+./node2001\
 --alice \
 --collator \
 --force-authoring \
