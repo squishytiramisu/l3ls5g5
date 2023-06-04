@@ -2,7 +2,7 @@
 --alice \
 --collator \
 --force-authoring \
---chain raw_para_xcmp.json \
+--chain raw_para_xcmp2.json \
 --base-path /tmp/xcmpdemo/alice2 \
 --port 40334 \
 --ws-port 8846 \
