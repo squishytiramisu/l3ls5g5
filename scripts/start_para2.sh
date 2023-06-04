@@ -1,4 +1,4 @@
-./node2001\
+./node2001 \
 --alice \
 --collator \
 --force-authoring \
