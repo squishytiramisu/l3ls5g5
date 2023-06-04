@@ -13,7 +13,7 @@
 --rpc-cors=all \
 -- \
 --execution wasm \
---chain ../polkadot/rawroco.json \
+--chain ./rawroco.json \
 --port 30345 \
 --ws-port 9979 \
 --rpc-port 9967
